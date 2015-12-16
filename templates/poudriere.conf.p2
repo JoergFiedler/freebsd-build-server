@@ -1,0 +1,87 @@
+#### ZFS
+# The pool where poudriere will create all the filesystems it needs
+# poudriere will use tank/${ZROOTFS} as its root
+#
+# You need at least 7GB of free space in this pool to have a working
+# poudriere.
+#
+ZPOOL=tank
+
+# root of the poudriere zfs filesystem, by default /poudriere
+ZROOTFS=/poudriere
+
+# the host where to download sets for the jails setup
+FREEBSD_HOST={{ freebsd_mirror_server }}
+
+# By default the jails have no /etc/resolv.conf, you will need to set
+# RESOLV_CONF to a file on your hosts system that will be copied has
+# /etc/resolv.conf for the jail, except if you don't need it (using an http
+# proxy for example)
+RESOLV_CONF=/etc/resolv.conf
+
+# The directory where poudriere will store jails and ports
+BASEFS=/usr/local/poudriere
+
+# Use portlint to check ports sanity
+USE_PORTLINT=no
+
+# If set the given directory will be used for the distfiles
+# This allows to share the distfiles between jails and ports tree
+DISTFILES_CACHE=/usr/ports/distfiles
+
+# When building packages, a memory device can be used to speedup the build.
+# Only one of MFSSIZE or USE_TMPFS is supported. TMPFS is generally faster
+# and will expand to the needed amount of RAM. MFS is a slower since it
+# uses UFS and several abstraction layers.
+
+# Use tmpfs(5)
+# This can be a space-separated list of options:
+# wrkdir    - Use tmpfs(5) for port building WRKDIRPREFIX
+# data      - Use tmpfs(5) for poudriere cache/temp build data
+# localbase - Use tmpfs(5) for LOCALBASE (installing ports for packaging/testing)
+# all       - Run the entire build in memory, including builder jails.
+# yes       - Only enables tmpfs(5) for wrkdir
+# EXAMPLE: USE_TMPFS="wrkdir data"
+USE_TMPFS="yes"
+
+# How much memory to limit tmpfs size to for *each builder* in GiB
+# (default: none)
+TMPFS_LIMIT=4
+
+# Automatic OPTION change detection
+# When bulk building packages, compare the options from kept packages to
+# the current options to be built. If they differ, the existing package
+# will be deleted and the port will be rebuilt.
+# Valid options: yes, no, verbose
+# verbose will display the old and new options
+CHECK_CHANGED_OPTIONS=verbose
+
+# Automatic Dependency change detection
+# When bulk building packages, compare the dependencies from kept packages to
+# the current dependencies for every port. If they differ, the existing package
+# will be deleted and the port will be rebuilt. This helps catch changes such
+# as DEFAULT_RUBY_VERSION, PERL_VERSION, WITHOUT_X11 that change dependencies
+# for many ports.
+# Valid options: yes, no
+CHECK_CHANGED_DEPS=yes
+
+# Path to the RSA key to sign the PKGNG repo with. See pkg-repo(8)
+PKG_REPO_SIGNING_KEY={{ poudriere_ssl_prefix }}/{{ poudriere_key_file }}
+
+# ccache support. Supply the path to your ccache cache directory.
+# It will be mounted into the jail and be shared among all jails.
+CCACHE_DIR=/var/cache/ccache
+
+# Disable linux support
+NOLINUX=yes
+
+# URL where your POUDRIERE_DATA/logs are hosted
+# This will be used for giving URL hints to the HTML output when
+# scheduling and starting builds
+URL_BASE=http://{{ ansible_default_ipv4.address }}/poudriere/
+
+# Define the building jail hostname to be used when building the packages
+# Some port/packages hardcode the hostname of the host during build time
+# This is a necessary setup for reproducible builds.
+BUILDER_HOSTNAME={{ ansible_default_ipv4.address }}
+

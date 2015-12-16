@@ -1,0 +1,59 @@
+---
+- name: Install required packages
+  pkgng: name={{ item }}
+         state=present
+  with_items:
+  - poudriere
+  - dialog4ports
+  - py27-pip
+
+- name: Install awscli
+  pip: name=awscli state=present
+
+- name: Create directory for ssl key
+  file: path={{ poudriere_ssl_prefix }}
+        state=directory
+
+- name: Copy sign key
+  copy: src={{ poudriere_key_file }}
+        dest={{ poudriere_ssl_prefix }}/poudriere.key
+        mode=0600
+
+- name: Create poudriere.conf
+  template: src=poudriere.conf.p2
+            dest=/usr/local/etc/poudriere.conf
+
+- name: Create missing distfile directory
+  file: path=/usr/ports/distfiles
+        state=directory
+
+- name: Create poudriere jails
+  command: poudriere jail -c -j {{ item.jail_name }} -v {{ item.version }}
+           creates={{ poudriere_config_path }}/jails/{{ item.jail_name }}/timestamp
+  with_items: '{{ poudriere_jails }}'
+
+- name: Copy make.conf
+  template: src=make.conf.p2
+            dest={{ poudriere_config_path }}/{{ item.jail_name }}-make.conf
+  with_items: '{{ poudriere_jails }}'
+
+- name: Sync build options from S3
+  shell: AWS_ACCESS_KEY_ID="{{ aws_access_key_id}}" \
+           AWS_SECRET_ACCESS_KEY="{{ aws_secret_access_key }}" \
+           AWS_DEFAULT_REGION="{{ aws_default_region }}" \
+           /usr/local/bin/aws s3 sync \
+           s3://{{ s3_bucket_name }}{{ s3_upload_path }}/build-options/ \
+           {{ poudriere_config_path }}/
+
+- name: Copy list of packages to build
+  copy: src=port-list
+        dest={{ poudriere_config_path }}/port-list
+
+- name: Download most recent ports tree
+  command: poudriere ports -c -p HEAD
+           creates=/usr/local/poudriere/ports/HEAD
+
+- name: Install S3 upload script
+  template: src=upload-to-s3.p2
+            dest=/usr/local/bin/upload-to-s3
+            mode=0750

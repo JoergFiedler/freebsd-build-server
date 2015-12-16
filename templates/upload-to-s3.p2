@@ -1,0 +1,35 @@
+#!/bin/sh
+
+AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-"{{ aws_default_region }}"}
+AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-"{{ aws_access_key_id }}"}
+AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-"{{ aws_secret_access_key }}"}
+
+export AWS_DEFAULT_REGION
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
+
+POUDRIERE_REPO_PATH="/usr/local/poudriere/data/packages"
+POUDRIERE_CONFIG_PATH="/usr/local/etc/poudriere.d"
+
+if [ -z ${AWS_DEFAULT_REGION} -o -z ${AWS_ACCESS_KEY_ID} -o -z ${AWS_SECRET_ACCESS_KEY} ]
+then
+  echo "Please provide credentials and region. You may run 'aws configure' to do so."
+  exit 1
+fi
+
+# sync packages to S3
+aws s3 sync \
+    ${POUDRIERE_REPO_PATH}/ s3://{{ s3_bucket_name }}{{ s3_upload_path}}/packages \
+    --acl 'public-read' \
+    --only-show-errors \
+    --delete
+
+# sync build options to S3
+aws s3 sync \
+    ${POUDRIERE_CONFIG_PATH}/ s3://{{ s3_bucket_name }}{{ s3_upload_path}}/build-options \\
+    --acl 'public-read' \
+    --exclude '*' \
+    --include '*-options/*' \
+    --only-show-errors \
+    --delete
+

@@ -1,0 +1,14 @@
+---
+# defaults file for freebsd-build-server
+aws_default_region: 'eu-west-1'
+aws_access_key_id: ''
+aws_secret_access_key: ''
+
+s3_bucket_name: ''
+s3_upload_path: '/public/FreeBSD'
+
+freebsd_mirror_server: 'ftp://ftp.de.freebsd.org'
+
+poudriere_ssl_prefix: '/usr/local/etc/ssl'
+poudriere_key_file: 'poudriere.key'
+poudriere_jails: ''
