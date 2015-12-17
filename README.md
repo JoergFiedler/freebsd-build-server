@@ -6,7 +6,7 @@ Creates a FreeBSD server which provides a ready to run 'poudriere' installation.
 You may want to adapt the content of the following files to match your needs:
 
 - `files/port-list`, contains the list of ports you want to build
-- `file/poudriere.key`, the key to sign the packages (you may want to replace it with your own or set the value of poudriere_key_file to the path where you have your key stored
+- `file/poudriere.key`, the key to sign the packages (you may want to replace it with your own or set the value of `poudriere_key_file` to the path where you have your key stored
 - `templates/make.conf.p2`, global build settings used by make
 - `templates/poudriere.conf.p2`, poudriere configuration file
 - `templates/upload-to-s3`, utility script used to sync packages and package's build option to S3
