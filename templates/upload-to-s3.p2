@@ -26,7 +26,7 @@ aws s3 sync \
 
 # sync build options to S3
 aws s3 sync \
-    ${POUDRIERE_CONFIG_PATH}/ s3://{{ s3_bucket_name }}{{ s3_upload_path}}/build-options \\
+    ${POUDRIERE_CONFIG_PATH}/ s3://{{ s3_bucket_name }}{{ s3_upload_path}}/build-options \
     --acl 'public-read' \
     --exclude '*' \
     --include '*-options/*' \
