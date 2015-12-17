@@ -57,3 +57,8 @@
   template: src=upload-to-s3.p2
             dest=/usr/local/bin/upload-to-s3
             mode=0750
+
+- name: Install build script
+  template: src=build-ports.p2
+            dest=/usr/local/bin/build-ports
+            mode=0750

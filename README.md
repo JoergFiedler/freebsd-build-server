@@ -18,8 +18,7 @@ With all that in mind the typical workflow looks like this.
 1. Spawn a new server
 1. Apply this ansible role
 1. Log in
-1. Run: `poudriere options -j freebsd-10_2_x64 -p HEAD -f /usr/local/etc/poudriere.d/port-list`
-1. Run: `poudriere bulk -j freebsd-10_2_x64 -p HEAD -f /usr/local/etc/poudriere.d/port-list`
+1. Run: `build-ports`
 1. Run: `upload-to-s3`
 1. Log out
 1. Destroy the server
