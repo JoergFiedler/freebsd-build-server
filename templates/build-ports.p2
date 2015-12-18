@@ -4,7 +4,7 @@ JAIL_NAMES='{{ poudriere_jails|join(' ', attribute='jail_name') }}'
 
 _configure_port()
 {
-  poudriere options -c \
+  poudriere options \
     -j "$1" \
     -p HEAD \
     -f /usr/local/etc/poudriere.d/port-list
@@ -17,7 +17,6 @@ _build_port()
     -p HEAD \
     -f /usr/local/etc/poudriere.d/port-list
 }
-
 
 for jail in ${JAIL_NAMES}
 do
