@@ -46,7 +46,7 @@
            {{ poudriere_config_path }}/
 
 - name: Copy list of packages to build
-  copy: src=port-list
+  copy: src={{ poudriere_port_list_file }}
         dest={{ poudriere_config_path }}/port-list
 
 - name: Download most recent ports tree

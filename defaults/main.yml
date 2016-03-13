@@ -11,4 +11,5 @@ freebsd_mirror_server: 'ftp://ftp.freebsd.org'
 
 poudriere_ssl_prefix: '/usr/local/etc/ssl'
 poudriere_key_file: 'poudriere.key'
+poudriere_port_list_file: 'port-list'
 poudriere_jails: ''
