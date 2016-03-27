@@ -3,19 +3,19 @@ freebsd-build-server
 
 Creates a FreeBSD server which provides a ready to run 'poudriere' installation. See [FreeBSD Handbook](https://www.freebsd.org/doc/handbook/ports-poudriere.html) for further information.
 
-You may want to adapt the content of the following files to match your needs:
-
-- `files/port-list`, contains the list of ports you want to build
-- `file/poudriere.key`, the key to sign the packages (you may want to replace it with your own or set the value of `poudriere_key_file` to the path where you have your key stored
-- `templates/make.conf.p2`, global build settings used by make
-- `templates/poudriere.conf.p2`, poudriere configuration file
-- `templates/upload-to-s3`, utility script used to sync packages and package's build option to S3
-
 I wanted to have a build server which I don't have to keep running all the time. To accomplish this, the package repository and the build option for all the packages are synced to S3. This allows me to destroy the build server after the packages have been build and synced. During the next installation the the build options are synced back.
+
+Before you start you may provide you own files for by setting the path for the corresponding Ansible variable.
+
+1. `make.conf`, (`poudriere_build_options_file`)
+1. `port-list`, (`poudriere_port_list_file`)
+1. `poudriere.key.default`, (`poudriere_key_file`)
+
+You may do so by providing you own version of the file and setting the path to it to the corresponsind Ansible variable.
 
 With all that in mind the typical workflow looks like this.
 
-1. Spawn a new server
+1. Spawn a new server (there is a [Vagrant file](https://github.com/JoergFiedler/freebsd-build-machine/) for this)
 1. Apply this ansible role
 1. Log in
 1. Run: `build-ports`

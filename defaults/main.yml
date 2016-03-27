@@ -10,6 +10,8 @@ s3_upload_path: '/public/FreeBSD'
 freebsd_mirror_server: 'ftp://ftp.freebsd.org'
 
 poudriere_ssl_prefix: '/usr/local/etc/ssl'
-poudriere_key_file: 'poudriere.key'
-poudriere_port_list_file: 'port-list'
+poudriere_key_file: 'poudriere.key.default'
+poudriere_port_list_file: 'port-list.default'
 poudriere_jails: ''
+poudriere_build_options_file: 'make.conf.default'
+

@@ -33,7 +33,7 @@
   with_items: '{{ poudriere_jails }}'
 
 - name: Copy make.conf
-  template: src=make.conf.p2
+  template: src={{ poudriere_build_options_file }}
             dest={{ poudriere_config_path }}/{{ item.jail_name }}-make.conf
   with_items: '{{ poudriere_jails }}'
 
