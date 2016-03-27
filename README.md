@@ -55,8 +55,13 @@ The FreeBSD mirror server used to set up the jails. Default: `'ftp://ftp.freebsd
 The path where the package signing key should be saved. Default: `'/usr/local/etc/ssl'`.
 
 ##### poudriere_key_file
-The private key used to sign the packages. Please change this to use your own key. Default: `'poudriere.key'`.
+The private key used to sign the packages. Please change this to use your own key. Default: `'poudriere.keyi.default'`.
 
+##### poudriere_port_list_file
+The list of ports to build. Default: `'port-list.default'`.
+
+##### poudriere_build_options_file
+Build options `make.conf` used to build to ports. Default: `'make.conf.default'`.
 ##### poudriere_jails
 The jails which should be created.
 
@@ -82,6 +87,7 @@ Example Playbook
         aws_secret_access_key: '{{ lookup("env","AWS_SECRET_ACCESS_KEY") }}'
         aws_default_region: '{{ lookup("env","AWS_DEFAULT_REGION") }}'
         s3_bucket_name: 'your.fancy.bucket.name'
+        poudriere_port_list_file: 'path.to.your.port.list.file'
         poudriere_jails:
         - { jail_name: 'freebsd-10_2_x64', version: '10.2-RELEASE' }
 
