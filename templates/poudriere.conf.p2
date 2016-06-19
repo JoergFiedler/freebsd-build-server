@@ -66,7 +66,7 @@ CHECK_CHANGED_OPTIONS=verbose
 CHECK_CHANGED_DEPS=yes
 
 # Path to the RSA key to sign the PKGNG repo with. See pkg-repo(8)
-PKG_REPO_SIGNING_KEY={{ poudriere_ssl_prefix }}/{{ poudriere_key_file }}
+PKG_REPO_SIGNING_KEY={{ poudriere_ssl_prefix }}/poudriere.key
 
 # ccache support. Supply the path to your ccache cache directory.
 # It will be mounted into the jail and be shared among all jails.

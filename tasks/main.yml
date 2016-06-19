@@ -33,8 +33,8 @@
   with_items: '{{ poudriere_jails }}'
 
 - name: Copy make.conf
-  template: src={{ poudriere_build_options_file }}
-            dest={{ poudriere_config_path }}/{{ item.jail_name }}-make.conf
+  copy: src={{ poudriere_build_options_file }}
+        dest={{ poudriere_config_path }}/{{ item.jail_name }}-make.conf
   with_items: '{{ poudriere_jails }}'
 
 - name: Sync build options from S3
