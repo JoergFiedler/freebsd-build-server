@@ -86,10 +86,13 @@ Example Playbook
         aws_access_key_id: '{{ lookup("env","AWS_ACCESS_KEY_ID") }}'
         aws_secret_access_key: '{{ lookup("env","AWS_SECRET_ACCESS_KEY") }}'
         aws_default_region: '{{ lookup("env","AWS_DEFAULT_REGION") }}'
-        s3_bucket_name: 'your.fancy.bucket.name'
-        poudriere_port_list_file: 'path.to.your.port.list.file'
+        s3_bucket_name: 'repo.bucket.name'
+        poudriere_port_list_file: './files/port.list'
+        poudriere_key_file: './files/poudriere.key'
+        poudriere_build_options_file: './files/make.conf'
         poudriere_jails:
-        - { jail_name: 'freebsd-10_2_x64', version: '10.2-RELEASE' }
+          - { jail_name: 'freebsd-10_2_x64', version: '10.2-RELEASE' }
+          - { jail_name: 'freebsd-10_3_x64', version: '10.3-RELEASE' }
 
       roles:
       - { role: JoergFiedler.freebsd-build-server }
