@@ -9,7 +9,7 @@ Before you start you may provide you own files for by setting the path for the c
 
 1. `make.conf`, (`poudriere_build_options_file`)
 1. `port-list`, (`poudriere_port_list_file`)
-1. `poudriere.key.default`, (`poudriere_key_file`)
+1. `poudriere.key`, (`poudriere_key_file`)
 
 You may do so by providing you own version of the file and setting the path to it to the corresponsind Ansible variable.
 
@@ -18,8 +18,8 @@ With all that in mind the typical workflow looks like this.
 1. Spawn a new server (there is a [Vagrant file](https://github.com/JoergFiedler/freebsd-build-machine/) for this)
 1. Apply this ansible role
 1. Log in
-1. Run: `build-ports`
-1. Run: `upload-to-s3`
+1. Run: `sudo build-ports`
+1. Run: `sudo upload-to-s3`
 1. Log out
 1. Destroy the server
 
@@ -55,7 +55,7 @@ The FreeBSD mirror server used to set up the jails. Default: `'ftp://ftp.freebsd
 The path where the package signing key should be saved. Default: `'/usr/local/etc/ssl'`.
 
 ##### poudriere_key_file
-The private key used to sign the packages. Please change this to use your own key. Default: `'poudriere.keyi.default'`.
+The private key used to sign the packages. Please change this to use your own key. Default: `'poudriere.key.default'`.
 
 ##### poudriere_port_list_file
 The list of ports to build. Default: `'port-list.default'`.
