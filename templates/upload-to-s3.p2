@@ -21,8 +21,7 @@ fi
 aws s3 sync \
     ${POUDRIERE_REPO_PATH}/ s3://{{ s3_bucket_name }}{{ s3_upload_path}}/packages \
     --acl 'public-read' \
-    --only-show-errors \
-    --delete
+    --only-show-errors
 
 # sync build options to S3
 aws s3 sync \
@@ -30,6 +29,5 @@ aws s3 sync \
     --acl 'public-read' \
     --exclude '*' \
     --include '*-options/*' \
-    --only-show-errors \
-    --delete
+    --only-show-errors
 
