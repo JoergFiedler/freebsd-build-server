@@ -11,7 +11,7 @@ Before you start you may provide you own files for by setting the path for the c
 1. `port-list`, (`poudriere_port_list_file`)
 1. `poudriere.key`, (`poudriere_key_file`)
 
-You may do so by providing you own version of the file and setting the path to it to the corresponsind Ansible variable.
+You may do so by providing you own version of the file and setting the path to it to the corresponding Ansible variable.
 
 With all that in mind the typical workflow looks like this.
 
@@ -28,7 +28,7 @@ Easy as pie.
 Requirements
 ------------
 
-This role is intent to be used with a fresh FreeBSD 10.2 install with some minor modifications. There is a Vagrant Box with providers for VirtualBox and EC2 you may use. I created [this Vagrant project](https://github.com/JoergFiedler/freebsd-build-machine) to create Virtualbox and EC2 machines.
+This role is intent to be used with a fresh FreeBSD 11.0 install with some minor modifications. There is a Vagrant Box with providers for VirtualBox and EC2 you may use. I created [this Vagrant project](https://github.com/JoergFiedler/freebsd-build-machine) to create Virtualbox and EC2 machines.
 
 Role Variables
 --------------
@@ -66,7 +66,7 @@ Build options `make.conf` used to build to ports. Default: `'make.conf.default'`
 The jails which should be created.
 
     poudriere_jails:
-    - { jail_name: 'freebsd-10_2_x64', version: '10.2-RELEASE' }
+    - { jail_name: 'freebsd-11_0_x64', version: '11.0-RELEASE' }
 
 Default: `''`.
 
@@ -93,6 +93,7 @@ Example Playbook
         poudriere_jails:
           - { jail_name: 'freebsd-10_2_x64', version: '10.2-RELEASE' }
           - { jail_name: 'freebsd-10_3_x64', version: '10.3-RELEASE' }
+          - { jail_name: 'freebsd-11_0_x64', version: '11.0-RELEASE' }
 
       roles:
       - { role: JoergFiedler.freebsd-build-server }
