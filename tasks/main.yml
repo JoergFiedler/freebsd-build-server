@@ -9,6 +9,7 @@
 
 - name: Install awscli
   pip: name=awscli state=present
+  when: s3_bucket_name != ''
 
 - name: Create directory for ssl key
   file: path={{ poudriere_ssl_prefix }}
@@ -44,6 +45,7 @@
            /usr/local/bin/aws s3 sync \
            s3://{{ s3_bucket_name }}{{ s3_upload_path }}/build-options/ \
            {{ poudriere_config_path }}/
+  when: s3_bucket_name != ''
 
 - name: Copy list of packages to build
   copy: src={{ poudriere_port_list_file }}
@@ -57,8 +59,16 @@
   template: src=upload-to-s3.p2
             dest=/usr/local/bin/upload-to-s3
             mode=0750
+  when: s3_bucket_name != ''
 
 - name: Install build script
   template: src=build-ports.p2
             dest=/usr/local/bin/build-ports
             mode=0750
+
+- name: Enable daily build cron job
+  cron:
+    name: Run poudriere build
+    job: /usr/local/bin/build-ports
+    special_time: daily
+  when: poudriere_enable_cron

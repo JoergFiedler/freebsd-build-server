@@ -44,6 +44,7 @@ S3 secret key. Default: `''`.
 
 ##### s3_bucket_name
 The bucket to use to store the packages and build options. Default: `''`.
+If no bucket is specified, no S3 related configuration will be performed.
 
 ##### s3_upload_path
 The path within the S3 bucket where to put `packages` and `build-options` folder. Default: `'/public/FreeBSD'`.
@@ -62,6 +63,7 @@ The list of ports to build. Default: `'port-list.default'`.
 
 ##### poudriere_build_options_file
 Build options `make.conf` used to build to ports. Default: `'make.conf.default'`.
+
 ##### poudriere_jails
 The jails which should be created.
 
@@ -69,6 +71,12 @@ The jails which should be created.
     - { jail_name: 'freebsd-11_0_x64', version: '11.0-RELEASE' }
 
 Default: `''`.
+
+##### poudriere_zpool
+Name of the ZFS `ZPOOL` used by poudriere. Default: `'tank'`.
+
+##### poudriere_enable_cron
+Enable a daily cron job which runs a poudriere bulk build. Default: `no`.
 
 Dependencies
 ------------
@@ -94,6 +102,8 @@ Example Playbook
           - { jail_name: 'freebsd-10_2_x64', version: '10.2-RELEASE' }
           - { jail_name: 'freebsd-10_3_x64', version: '10.3-RELEASE' }
           - { jail_name: 'freebsd-11_0_x64', version: '11.0-RELEASE' }
+        poudriere_zpool: 'tank'
+        poudriere_enable_cron: yes
 
       roles:
       - { role: JoergFiedler.freebsd-build-server }
