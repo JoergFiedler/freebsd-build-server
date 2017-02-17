@@ -1,0 +1,17 @@
+---
+
+- name: Install awscli
+  pip: name=awscli state=present
+
+- name: Sync build options from S3
+  shell: AWS_ACCESS_KEY_ID='{{ aws_access_key_id}}' \
+           AWS_SECRET_ACCESS_KEY='{{ aws_secret_access_key }}' \
+           AWS_DEFAULT_REGION='{{ aws_default_region }}' \
+           /usr/local/bin/aws s3 sync \
+           s3://{{ s3_bucket_name }}{{ s3_upload_path }}/build-options/ \
+           {{ poudriere_config_path }}/
+
+- name: Install S3 upload script
+  template: src=upload-to-s3.p2
+            dest=/usr/local/bin/upload-to-s3
+            mode=0750

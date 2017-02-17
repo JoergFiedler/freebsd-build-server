@@ -33,6 +33,10 @@ This role is intent to be used with a fresh FreeBSD 11.0 install with some minor
 Role Variables
 --------------
 
+##### poudriere_enable_s3
+When enabled, AWS S3 will be configured on the host using the following
+configuration parameters. Default: `'yes'`.
+
 ##### aws_default_region
 S3 region to use. Default: `''`.
 
@@ -62,6 +66,7 @@ The list of ports to build. Default: `'port-list.default'`.
 
 ##### poudriere_build_options_file
 Build options `make.conf` used to build to ports. Default: `'make.conf.default'`.
+
 ##### poudriere_jails
 The jails which should be created.
 
@@ -69,6 +74,12 @@ The jails which should be created.
     - { jail_name: 'freebsd-11_0_x64', version: '11.0-RELEASE' }
 
 Default: `''`.
+
+##### poudriere_zpool
+Name of the ZFS `ZPOOL` used by poudriere. Default: `'tank'`.
+
+##### poudriere_enable_cron
+Enable a daily cron job which runs a poudriere bulk build. Default: `no`.
 
 Dependencies
 ------------
@@ -94,6 +105,8 @@ Example Playbook
           - { jail_name: 'freebsd-10_2_x64', version: '10.2-RELEASE' }
           - { jail_name: 'freebsd-10_3_x64', version: '10.3-RELEASE' }
           - { jail_name: 'freebsd-11_0_x64', version: '11.0-RELEASE' }
+        poudriere_zpool: 'tank'
+        poudriere_enable_cron: yes
 
       roles:
       - { role: JoergFiedler.freebsd-build-server }
