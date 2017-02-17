@@ -33,6 +33,10 @@ This role is intent to be used with a fresh FreeBSD 11.0 install with some minor
 Role Variables
 --------------
 
+##### poudriere_enable_s3
+When enabled, AWS S3 will be configured on the host using the following
+configuration parameters. Default: `'yes'`.
+
 ##### aws_default_region
 S3 region to use. Default: `''`.
 
@@ -44,7 +48,6 @@ S3 secret key. Default: `''`.
 
 ##### s3_bucket_name
 The bucket to use to store the packages and build options. Default: `''`.
-If no bucket is specified, no S3 related configuration will be performed.
 
 ##### s3_upload_path
 The path within the S3 bucket where to put `packages` and `build-options` folder. Default: `'/public/FreeBSD'`.
