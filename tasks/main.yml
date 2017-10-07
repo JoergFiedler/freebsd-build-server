@@ -54,5 +54,5 @@
     special_time: daily
   when: poudriere_enable_cron
 
-- include: aws_s3.yml
+- include_tasks: aws_s3.yml
   when: poudriere_enable_s3
