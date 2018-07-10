@@ -8,7 +8,7 @@ _configure_port()
 {
   poudriere options \
     -j "$1" \
-    -p HEAD \
+    -p {{ poudriere_ports_tree_name }} \
     -f /usr/local/etc/poudriere.d/port-list
 }
 
@@ -16,7 +16,7 @@ _build_port()
 {
   poudriere bulk \
     -j "$1" \
-    -p HEAD \
+    -p {{ poudriere_ports_tree_name }} \
     -f /usr/local/etc/poudriere.d/port-list
 }
 

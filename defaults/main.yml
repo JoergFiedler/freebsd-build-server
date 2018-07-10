@@ -13,6 +13,7 @@ poudriere_ssl_prefix: '/usr/local/etc/ssl'
 poudriere_key_file: 'poudriere.key.default'
 poudriere_port_list_file: 'port-list.default'
 poudriere_jails: ''
+poudriere_ports_tree_name: 'HEAD'
 poudriere_build_options_file: 'make.conf.default'
 poudriere_zpool: 'tank'
 poudriere_enable_cron: no

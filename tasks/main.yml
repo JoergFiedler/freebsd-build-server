@@ -39,8 +39,8 @@
         dest={{ poudriere_config_path }}/port-list
 
 - name: Download most recent ports tree
-  command: poudriere ports -c -p HEAD
-           creates=/usr/local/poudriere/ports/HEAD
+  command: poudriere ports -c -p {{ poudriere_ports_tree_name }}
+           creates=/usr/local/poudriere/ports/{{ poudriere_ports_tree_name }}
 
 - name: Install build script
   template: src=build-ports.p2
