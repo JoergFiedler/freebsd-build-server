@@ -1,3 +1,4 @@
 ---
 # vars file for freebsd-build-server
 poudriere_config_path: '/usr/local/etc/poudriere.d'
+ports_tree_name: '{{ poudriere_ports_branch_name | replace("/", "_") }}'

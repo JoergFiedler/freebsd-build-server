@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 {{ ansible_managed | comment }}
 
 JAIL_NAMES='{{ poudriere_jails|join(' ', attribute='jail_name') }}'
@@ -8,16 +7,16 @@ _configure_port()
 {
   poudriere options \
     -j "$1" \
-    -p {{ poudriere_ports_tree_name }} \
-    -f /usr/local/etc/poudriere.d/port-list
+    -p {{ ports_tree_name }} \
+    -f /usr/local/etc/poudriere.d/ports-list
 }
 
 _build_port()
 {
   poudriere bulk \
     -j "$1" \
-    -p {{ poudriere_ports_tree_name }} \
-    -f /usr/local/etc/poudriere.d/port-list
+    -p {{ ports_tree_name }} \
+    -f /usr/local/etc/poudriere.d/ports-list
 }
 
 for jail in ${JAIL_NAMES}

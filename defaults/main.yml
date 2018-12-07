@@ -1,7 +1,7 @@
 ---
 # defaults file for freebsd-build-server
-aws_default_region: ''
 aws_access_key_id: ''
+aws_default_region: ''
 aws_secret_access_key: ''
 
 s3_bucket_name: ''
@@ -9,12 +9,12 @@ s3_upload_path: '/public/FreeBSD'
 
 freebsd_mirror_server: 'ftp://ftp.freebsd.org'
 
-poudriere_ssl_prefix: '/usr/local/etc/ssl'
-poudriere_key_file: 'poudriere.key.default'
-poudriere_port_list_file: 'port-list.default'
-poudriere_jails: ''
-poudriere_ports_tree_name: 'HEAD'
 poudriere_build_options_file: 'make.conf.default'
-poudriere_zpool: 'tank'
 poudriere_enable_cron: no
 poudriere_enable_s3: yes
+poudriere_jails: ''
+poudriere_key_file: 'poudriere.key.default'
+poudriere_ports_branch_name: 'head'
+poudriere_ports_list_file: ''
+poudriere_ssl_prefix: '/usr/local/etc/ssl'
+poudriere_zpool: 'tank'

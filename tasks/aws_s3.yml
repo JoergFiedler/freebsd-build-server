@@ -1,7 +1,12 @@
 ---
-
 - name: Install awscli
   pip: name=awscli state=present
+
+- name: Install S3 upload script
+  template:
+    src: 'upload-to-s3.p2'
+    dest: '/usr/local/bin/upload-to-s3'
+    mode: 0750
 
 - name: Sync build options from S3
   shell: |
@@ -14,8 +19,3 @@
   args:
     executable: /bin/sh
   when: s3_bucket_name != ''
-
-- name: Install S3 upload script
-  template: src=upload-to-s3.p2
-            dest=/usr/local/bin/upload-to-s3
-            mode=0750

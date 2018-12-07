@@ -1,51 +1,66 @@
 ---
 - name: Install required packages
-  pkgng: name={{ item }}
-         state=present
-  with_items:
-  - poudriere
-  - dialog4ports
-  - py27-pip
+  pkgng:
+    name: '{{ item }}'
+    state: present
+  loop:
+    - poudriere
+    - dialog4ports
+    - py27-pip
+
+- name: Install awscli
+  pip:
+    name: 'awscli'
+    state: present
 
 - name: Create directory for ssl key
-  file: path={{ poudriere_ssl_prefix }}
-        state=directory
+  file:
+    path: '{{ poudriere_ssl_prefix }}'
+    state: directory
 
 - name: Copy sign key
-  copy: src={{ poudriere_key_file }}
-        dest={{ poudriere_ssl_prefix }}/poudriere.key
-        mode=0600
+  copy:
+    src: '{{ poudriere_key_file }}'
+    dest: '{{ poudriere_ssl_prefix }}/poudriere.key'
+    mode: 0600
 
 - name: Create poudriere.conf
-  template: src=poudriere.conf.p2
-            dest=/usr/local/etc/poudriere.conf
+  template:
+    src: 'poudriere.conf.p2'
+    dest: '/usr/local/etc/poudriere.conf'
 
 - name: Create missing distfile directory
-  file: path=/usr/ports/distfiles
-        state=directory
+  file:
+    path: '/usr/ports/distfiles'
+    state: directory
 
 - name: Create poudriere jails
   command: poudriere jail -c -j {{ item.jail_name }} -v {{ item.version }}
-           creates={{ poudriere_config_path }}/jails/{{ item.jail_name }}/timestamp
-  with_items: '{{ poudriere_jails }}'
+  args:
+    creates: '{{ poudriere_config_path }}/jails/{{ item.jail_name }}/timestamp'
+  loop: '{{ poudriere_jails }}'
 
 - name: Copy make.conf
-  copy: src={{ poudriere_build_options_file }}
-        dest={{ poudriere_config_path }}/{{ item.jail_name }}-make.conf
-  with_items: '{{ poudriere_jails }}'
+  copy:
+    src: '{{ poudriere_build_options_file }}'
+    dest: '{{ poudriere_config_path }}/{{ item.jail_name }}-make.conf'
+  loop: '{{ poudriere_jails }}'
 
 - name: Copy list of packages to build
-  copy: src={{ poudriere_port_list_file }}
-        dest={{ poudriere_config_path }}/port-list
+  copy:
+    src: '{{ poudriere_ports_list_file }}'
+    dest: '{{ poudriere_config_path }}/ports-list'
 
-- name: Download most recent ports tree
-  command: poudriere ports -c -p {{ poudriere_ports_tree_name }}
-           creates=/usr/local/poudriere/ports/{{ poudriere_ports_tree_name }}
+- name: Download ports tree
+  command: poudriere ports -c -B {{ poudriere_ports_branch_name }} -m svn -p {{ ports_tree_name }}
+  args:
+    creates: '/usr/local/poudriere/ports/{{ ports_tree_name }}'
 
 - name: Install build script
-  template: src=build-ports.p2
-            dest=/usr/local/bin/build-ports
-            mode=0750
+  template:
+    src: 'build-ports.p2'
+    dest: '/usr/local/bin/build-ports'
+    mode: 0750
 
 - name: Enable daily build cron job
   cron:
