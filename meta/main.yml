@@ -1,16 +1,16 @@
 ---
 galaxy_info:
   author: Joerg Fiedler
+  company: Joerg Fiedler
   description: Creates a FreeBSD build server (poudriere).
   license: BSD
-  min_ansible_version: 1.2
+  min_ansible_version: 2.7.0
   platforms:
     - name: FreeBSD
       versions:
-        - 10.2
+        - 11.2
   galaxy_tags:
-    - FreeBSD
+    - freebsd
     - ec2
     - poudriere
 dependencies: []
-
