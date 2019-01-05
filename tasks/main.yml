@@ -52,7 +52,12 @@
     dest: '{{ poudriere_config_path }}/ports-list'
 
 - name: Download ports tree
-  command: poudriere ports -c -B {{ poudriere_ports_branch_name }} -m svn -p {{ ports_tree_name }}
+  command: |
+    poudriere ports \
+    -c \
+    -B {{ poudriere_ports_branch_name }} \
+    -m svn+https \
+    -p {{ ports_tree_name }}
   args:
     creates: '/usr/local/poudriere/ports/{{ ports_tree_name }}'
 
