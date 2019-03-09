@@ -29,10 +29,13 @@
     src: 'poudriere.conf.p2'
     dest: '/usr/local/etc/poudriere.conf'
 
-- name: Create missing distfile directory
+- name: Create missing distfile directories
   file:
-    path: '/usr/ports/distfiles'
+    path: '{{ item }}'
     state: directory
+  loop:
+    - '/usr/ports/distfiles'
+    - '/usr/local/poudriere'
 
 - name: Create poudriere jails
   command: poudriere jail -c -j {{ item.jail_name }} -v {{ item.version }}
