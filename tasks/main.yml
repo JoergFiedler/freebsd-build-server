@@ -5,13 +5,7 @@
     state: present
   loop:
     - poudriere
-    - dialog4ports
-    - py27-pip
-
-- name: Install awscli
-  pip:
-    name: 'awscli'
-    state: present
+    - awscli
 
 - name: Create directory for ssl key
   file:
