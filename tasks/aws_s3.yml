@@ -1,7 +1,4 @@
 ---
-- name: Install awscli
-  pip: name=awscli state=present
-
 - name: Install S3 upload script
   template:
     src: 'upload-to-s3.p2'
