@@ -75,6 +75,14 @@ The jails which should be created.
 
 Default: `''`.
 
+##### poudriere_zpool
+
+The name of the zpool that will be used by `poudriere`. If the pool does not exist, it will be created using the devices specified in `poudriere_zpool_devices`. Default: 'tank'.
+
+##### poudriere_zpool_devices
+
+The devices that should be used to create the zpool for poudriere, e.g. `/dev/nvd1`. Default: ''.
+
 Dependencies
 ------------
 

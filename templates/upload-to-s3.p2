@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/usr/bin/env sh
 {{ ansible_managed | comment }}
 
 AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-"{{ aws_default_region }}"}

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 {{ ansible_managed | comment }}
 
 JAIL_NAMES='{{ poudriere_jails|join(' ', attribute='jail_name') }}'

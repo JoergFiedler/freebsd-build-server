@@ -1,4 +1,21 @@
----
+- name: Ensure ZFS is started
+  service:
+    name: 'zfs'
+    enabled: yes
+    state: started
+  when: poudriere_zpool != ''
+
+- name: Check if poudriere zpool exists
+  command: 'zpool status {{ poudriere_zpool }}'
+  register: zpool_status
+  ignore_errors: yes
+  changed_when: false
+  when: poudriere_zpool != ''
+
+- name: Create poudriere zpool
+  command: 'zpool create {{ poudriere_zpool }} {{ poudriere_zpool_devices }}'
+  when: "'no such pool' in zpool_status.stderr"
+
 - name: Install required packages
   pkgng:
     name: '{{ item }}'
